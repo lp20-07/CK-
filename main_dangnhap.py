@@ -4,6 +4,7 @@ from PyQt6 import uic
 
 from taikhoan import TaiKhoan
 from TapTaiKhoan import DanhSachTaiKhoan
+from main_muon_sach import RentBookWindow
 
 class LoginWindow(QMainWindow):
     def __init__(self):
@@ -18,7 +19,6 @@ class LoginWindow(QMainWindow):
         self.btndangki.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(1))
         self.btnquenmk.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(2))
         self.btnquaylai.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
-        self.btnquaylai2.clicked.connect(lambda: self.stackedWidget.setCurrentIndex(0))
 
         self.btndangnhap.clicked.connect(self.xu_ly_dang_nhap)
         self.btnxacnhandk.clicked.connect(self.xu_ly_dang_ky)
@@ -30,26 +30,39 @@ class LoginWindow(QMainWindow):
 
         nguoi_dung = self.quan_ly.kiem_tra_dang_nhap(sdt, mk)
 
+
         if nguoi_dung:
             QMessageBox.information(self, "Thành công", f"Xin chào {nguoi_dung.ho_ten}!")
-
+            from main_manhinhchinh import MainWindow
+            self.man_hinh_chinh = MainWindow()
+            self.man_hinh_chinh.show()
+            self.close()
         else:
             QMessageBox.warning(self, "Lỗi", "Sai thông tin đăng nhập!")
 
     def xu_ly_dang_ky(self):
-        hoten = self.txthoten.text()
-        sdt = self.txtsdt2.text()
-        mk = self.txtmk2.text()
-        gmail = self.txtgmail.text()
+        hoten = self.txthoten.text().strip()
+        sdt = self.txtsdt2.text().strip()
+        mk = self.txtmk2.text().strip()
+        gmail = self.txtgmail.text().strip()
+        if not hoten or not sdt or not mk or not gmail:
+            QMessageBox.warning(self, "Thiếu thông tin", "Vui lòng điền đầy đủ tất cả các ô!")
+            return
+        if len(mk) < 6:
+            QMessageBox.warning(self, "Mật khẩu yếu", "Mật khẩu phải có ít nhất 6 ký tự!")
+            return
 
-        tk_moi = TaiKhoan(sdt, mk, hoten)
+
+        from taikhoan import TaiKhoan  # Đảm bảo đã import
+        tk_moi = TaiKhoan(sdt, mk, hoten, email=gmail)
         ket_qua = self.quan_ly.them_moi(tk_moi)
 
         if ket_qua:
-            QMessageBox.information(self, "OK", "Đăng ký thành công! Mời đăng nhập.")
+            QMessageBox.information(self, "Thành công", "Đăng ký thành công! Mời bạn đăng nhập.")
             self.stackedWidget.setCurrentIndex(0)
         else:
-            QMessageBox.warning(self, "Lỗi", "Số điện thoại này đã có người dùng!")
+            QMessageBox.warning(self, "Lỗi", "Số điện thoại này đã được đăng ký rồi!")
+
 
     def xu_ly_quen_mk(self):
         thong_tin = self.txtsdt3.text().strip()
@@ -62,7 +75,7 @@ class LoginWindow(QMainWindow):
             QMessageBox.critical(self, "Lỗi", "Không tìm thấy tài khoản này!")
 
 
-# --- CHẠY CHƯƠNG TRÌNH ---
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = LoginWindow()
