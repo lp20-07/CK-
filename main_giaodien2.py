@@ -14,9 +14,6 @@ class TimeInfoWindow(QMainWindow):
         self.thong_tin = thong_tin
         self.next_window = None
         
-        #Hiển thị ngày tháng từ màn hình mượn sách
-        self.hien_thi_ngay_tu_form_truoc()
-
         #Tính số ngày tự động
         self.tinh_so_ngay()
         
@@ -148,14 +145,7 @@ class TimeInfoWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    thong_tin_mau = {
-        'hoten': 'Nguyễn Văn A',
-        'sdt': '0123456789',
-        'cmt': '123456789',
-        'tensach': 'Lập trình Python',
-        'masach': 'PY001',
-        'diachi': 'Hà Nội'
-    }
     window = TimeInfoWindow(thong_tin_mau)
     window.show()
+
     sys.exit(app.exec())
