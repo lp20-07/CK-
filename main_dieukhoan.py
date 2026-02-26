@@ -13,7 +13,6 @@ class TermsWindow(QMainWindow):
         self.thong_tin = thong_tin
         self.next_window = None
         
-        # Kết nối nút đồng ý
         self.ptndongy.clicked.connect(self.xu_ly_dong_y)
     
     def fix_font(self):
@@ -32,7 +31,6 @@ class TermsWindow(QMainWindow):
         msg.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
 
         if msg.exec() == QMessageBox.StandardButton.Yes:
-            # Chuyển sang màn hình thanh toán
             from main_thanhtoan1 import BankTransferWindow
             self.next_window = BankTransferWindow(self.thong_tin)
             self.next_window.show()
@@ -40,7 +38,7 @@ class TermsWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    thong_tin_mau = {'hoten': 'Test'}
-    window = TermsWindow(thong_tin_mau)
+    window = TermsWindow()
     window.show()
+
     sys.exit(app.exec())
