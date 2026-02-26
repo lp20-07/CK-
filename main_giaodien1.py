@@ -10,15 +10,12 @@ class CustomerInfoWindow(QMainWindow):
         uic.loadUi("giaodien.ui", self)
         
         self.fix_font()
-        # Lưu thông tin
         self.thong_tin = thong_tin if thong_tin else {}
         self.next_window = None
         
-        # Nếu có thông tin thì hiển thị lên form
         if thong_tin:
             self.hien_thi_thong_tin()
 
-        # Kết nối nút Xác nhận
         self.ptnxacnhan.clicked.connect(self.xu_ly_xac_nhan)
         self.ptnquaylai.clicked.connect(self.close)
     
@@ -58,7 +55,6 @@ class CustomerInfoWindow(QMainWindow):
         masach = self.ledMasach.text().strip()
         diachi = self.ledDiachi.text().strip()
         
-        # Kiểm tra thông tin bắt buộc
         if not hoten or not sdt or not masach:
             QMessageBox.warning(None, "Thiếu thông tin", 
                                "Vui lòng nhập đủ họ tên, SĐT và mã sách!")
@@ -77,11 +73,9 @@ class CustomerInfoWindow(QMainWindow):
         """Xử lý khi bấm nút Xác nhận"""
         thong_tin = self.lay_thong_tu_form()
         if thong_tin:
-            #Giữ lại thông tin ngày tháng từ màn hình trước:
             if 'ngay_muon' in self.thong_tin:
                 thong_tin['ngay_muon'] = self.thong_tin['ngay_muon']
                 thong_tin['ngay_tra'] = self.thong_tin['ngay_tra']
-            # Chuyển sang màn hình thời gian
             from main_giaodien2 import TimeInfoWindow
             self.next_window = TimeInfoWindow(thong_tin)
             self.next_window.show()
@@ -91,4 +85,5 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = CustomerInfoWindow()
     window.show()
+
     sys.exit(app.exec())
