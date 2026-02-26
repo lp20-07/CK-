@@ -12,7 +12,6 @@ class BankTransferWindow(QMainWindow):
         self.thong_tin = thong_tin
         self.next_window = None
         
-        # Kết nối nút ĐÃ THANH TOÁN
         self.ptnthanhtoan1.clicked.connect(self.xu_ly_da_thanh_toan)
     
 
@@ -47,8 +46,7 @@ class BankTransferWindow(QMainWindow):
                 "Thành công!", 
                 "Phiếu thuê đã được ghi nhận.\nBookflow xin cảm ơn vì đã sử dụng dịch vụ và chúc bạn có một ngày vui vẻ."
             )
-
-            # Quay về màn hình chính 
+ 
             try:
                 from main_manhinhchinh import MainWindow
                 self.main = MainWindow()
@@ -60,7 +58,7 @@ class BankTransferWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    thong_tin_mau = {'sdt': '0123456789', 'masach': 'PY001'}
-    window = BankTransferWindow(thong_tin_mau)
+    window = BankTransferWindow()
     window.show()
+
     sys.exit(app.exec())
