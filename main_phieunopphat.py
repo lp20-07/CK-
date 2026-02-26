@@ -14,10 +14,8 @@ class PenaltyWindow(QMainWindow):
         self.thong_tin = thong_tin
         self.next_window = None
         
-        # Hiển thị thông tin
         self.hien_thi_thong_tin()
         
-        # Kết nối nút THANH TOÁN
         self.ptnThanhtoan.clicked.connect(self.xu_ly_thanh_toan)
 
     def fix_font(self):
@@ -40,7 +38,6 @@ class PenaltyWindow(QMainWindow):
 
     def hien_thi_thong_tin(self):
         """Hiển thị thông tin lên các ô"""
-        # Thông tin cơ bản
         self.ledHoten.setText(self.thong_tin.get('hoten', ''))
         self.ledSdt.setText(self.thong_tin.get('sdt', ''))
         self.ledTensach.setText(self.thong_tin.get('tensach', ''))
@@ -48,11 +45,9 @@ class PenaltyWindow(QMainWindow):
         self.ledNgaymuon.setText(self.thong_tin.get('ngay_muon', ''))
         self.ledNgaytradk.setText(self.thong_tin.get('ngay_tra_du_kien', ''))
         
-        # Ngày trả thực tế là hôm nay
         ngay_hom_nay = QDate.currentDate().toString("dd/MM/yyyy")
         self.ledNgaytratt.setText(ngay_hom_nay)
         
-        # Tính số ngày quá hạn
         try:
             ngay_tra_du_kien = datetime.strptime(self.thong_tin.get('ngay_tra_du_kien', ''), '%d/%m/%Y')
             ngay_hom_nay_date = datetime.strptime(ngay_hom_nay, '%d/%m/%Y')
@@ -64,11 +59,9 @@ class PenaltyWindow(QMainWindow):
         
         self.ledSongayquahan.setText(str(so_ngay_qua_han))
         
-        # Tính tiền phạt
         tien_phat = so_ngay_qua_han * 10000
         self.ledSotiencantra.setText(f"{tien_phat:,.0f} VNĐ")
         
-        # Lưu lại
         self.so_ngay_qua_han = so_ngay_qua_han
         self.thong_tin['so_ngay_qua_han'] = so_ngay_qua_han
     
@@ -81,14 +74,7 @@ class PenaltyWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    thong_tin_mau = {
-        'hoten': 'Nguyễn Văn A',
-        'sdt': '0123456789',
-        'tensach': 'Lập trình Python',
-        'masach': 'PY001',
-        'ngay_muon': '01/02/2026',
-        'ngay_tra_du_kien': '15/02/2026'
-    }
-    window = PenaltyWindow(thong_tin_mau)
+    window = PenaltyWindow()
     window.show()
+
     sys.exit(app.exec())
