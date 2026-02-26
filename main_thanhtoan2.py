@@ -11,7 +11,6 @@ class PenaltyTransferWindow(QMainWindow):
         self.fix_font()
         self.thong_tin = thong_tin
         
-        # Kết nối nút ĐÃ THANH TOÁN
         self.ptndathanhtoan.clicked.connect(self.xu_ly_da_thanh_toan)
     
     def fix_font(self):
@@ -46,7 +45,6 @@ class PenaltyTransferWindow(QMainWindow):
                 "Đã thanh toán phạt thành công!\nCảm ơn bạn đã hợp tác."
             )
             
-            # Quay về màn hình chính
             try:
                 from main_manhinhchinh import MainWindow
                 self.main = MainWindow()
@@ -57,11 +55,7 @@ class PenaltyTransferWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    thong_tin_mau = {
-        'sdt': '0123456789', 
-        'masach': 'PY001',
-        'so_ngay_qua_han': 5
-    }
-    window = PenaltyTransferWindow(thong_tin_mau)
+    window = PenaltyTransferWindow()
     window.show()
+
     sys.exit(app.exec())
